@@ -1,0 +1,13 @@
+{
+  "name": "Bư Bư English – 500 First Words",
+  "short_name": "Bư Bư English",
+  "description": "Mỗi ngày 10 từ, Bư Bư giỏi tiếng Anh hơn một chút!",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#fff7e8",
+  "theme_color": "#ffb84d",
+  "lang": "vi",
+  "icons": [
+    { "src": "./icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
