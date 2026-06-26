@@ -27,3 +27,4 @@ html,body,#root{max-width:100%;overflow-x:hidden}
 @media(min-width:700px){.hero .mascot{align-self:end}.hero .mascot img{width:min(100%,240px)}}
 @media(max-width:430px){.mascot img{width:min(72%,210px);max-height:230px}.mascot__bubble{max-width:210px}}
 .grammar-pill{background:#ffe3e8;margin-left:6px}
+.usage-title{display:inline-block;font-weight:900;color:#e25f76;text-transform:uppercase;letter-spacing:.04em}.usage-card em{display:block;margin-top:6px;color:#5f6b6d;font-style:normal;font-weight:700}
