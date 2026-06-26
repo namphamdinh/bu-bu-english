@@ -26,7 +26,7 @@ export const QuizPage = () => {
 
   useEffect(() => {
     if (question.speakFirst) {
-      speak(question.word.word, { rate: 0.85, lang: "en-US" });
+      speak(question.speakText ?? question.word.word, { rate: 0.85, lang: "en-US" });
     }
   }, [question, speak]);
 
@@ -66,5 +66,10 @@ export const QuizPage = () => {
   if (!question) return null;
   return <main className="page"><ProgressBar value={index + 1} max={10} label="Quiz hôm nay" />
     {question.speakFirst && !isSupported && <p className="speech-fallback">Máy này chưa hỗ trợ đọc tiếng Anh tự động. Bư Bư vẫn có thể nhìn cách đọc và học bình thường nhé!</p>}
-    <QuizQuestion question={question} selected={selected} onAnswer={answer} /></main>;
+    <QuizQuestion
+      question={question}
+      selected={selected}
+      onAnswer={answer}
+      onSpeakOption={(text) => speak(text, { rate: 0.75, lang: "en-US" })}
+    /></main>;
 };

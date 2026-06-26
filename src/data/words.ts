@@ -591,11 +591,87 @@ down|xuống|⬇️|/daʊn/|đao-n
 same|giống nhau|🟰|/seɪm/|sâym
 `);
 
-export const words: Word[] = [
+const coreWords: Word[] = [
   ...family, ...animals, ...food, ...colors, ...numbers,
   ...body, ...school, ...toys, ...house, ...clothes,
   ...actions, ...feelings, ...nature, ...vehicles, ...dailyLife,
   ...shopping, ...weather, ...time, ...places, ...opposites
 ];
+
+const isActionCategory = (category: WordCategory) => category === "Actions" || category === "Daily Life";
+
+const makeSupplementalWords = (baseWords: Word[]): Word[] =>
+  baseWords.flatMap((base) => {
+    const action = isActionCategory(base.category);
+    const rows = action
+      ? [
+          {
+            word: `can ${base.word}`,
+            meaning: `có thể ${base.meaning}`,
+            example: `I can ${base.word}.`,
+            exampleMeaning: `Con có thể ${base.meaning}.`,
+            tip: `Nhớ mẫu “can + động từ”: I can ${base.word}.`
+          },
+          {
+            word: `like to ${base.word}`,
+            meaning: `thích ${base.meaning}`,
+            example: `I like to ${base.word}.`,
+            exampleMeaning: `Con thích ${base.meaning}.`,
+            tip: `Nhớ mẫu “like to + động từ”: I like to ${base.word}.`
+          },
+          {
+            word: `${base.word} every day`,
+            meaning: `${base.meaning} mỗi ngày`,
+            example: `I ${base.word} every day.`,
+            exampleMeaning: `Con ${base.meaning} mỗi ngày.`,
+            tip: `“every day” nghĩa là “mỗi ngày”.`
+          }
+        ]
+      : [
+          {
+            word: `my ${base.word}`,
+            meaning: `${base.meaning} của con`,
+            example: `This is my ${base.word}.`,
+            exampleMeaning: `Đây là ${base.meaning} của con.`,
+            tip: `“my” nghĩa là “của con/của mình”.`
+          },
+          {
+            word: `big ${base.word}`,
+            meaning: `${base.meaning} to`,
+            example: `I see a big ${base.word}.`,
+            exampleMeaning: `Con nhìn thấy ${base.meaning} to.`,
+            tip: `“big” đứng trước từ để nói “to/lớn”.`
+          },
+          {
+            word: `little ${base.word}`,
+            meaning: `${base.meaning} nhỏ`,
+            example: `I see a little ${base.word}.`,
+            exampleMeaning: `Con nhìn thấy ${base.meaning} nhỏ.`,
+            tip: `“little” đứng trước từ để nói “nhỏ/bé”.`
+          }
+        ];
+
+    return rows.map((row): Word => ({
+      id: nextId++,
+      word: row.word,
+      meaning: row.meaning,
+      category: base.category,
+      emoji: base.emoji,
+      pronunciation: `${base.pronunciation} + phrase`,
+      pronunciationText: row.word,
+      syllables: row.word.split(/\s+/),
+      vietnameseGuide: `Đây là cụm dùng từ “${base.word}”. Con nghe từng phần rồi đọc nối nhẹ: “${row.word}”.`,
+      mouthTip: `Đọc rõ từ chính “${base.word}”, các từ nhỏ như “my”, “can”, “to” đọc nhẹ hơn.`,
+      commonMistake: `Đừng đọc rời từng chữ quá lâu; hãy nối thành một cụm ngắn: “${row.word}”.`,
+      example: row.example,
+      exampleMeaning: row.exampleMeaning,
+      explanation: `“${row.word}” là cách dùng đơn giản của từ “${base.word}”, phù hợp khi Bư Bư nói một câu ngắn.`,
+      memoryTip: row.tip,
+      collocations: [row.word],
+      relatedWords: [base.word]
+    }));
+  });
+
+export const words: Word[] = [...coreWords, ...makeSupplementalWords(coreWords)];
 
 export const wordsById = new Map(words.map((word) => [word.id, word]));
