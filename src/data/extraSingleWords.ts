@@ -1505,24 +1505,78 @@ const extraSeeds: ExtraSeed[] = [
   ["treat", "từ mở rộng: treat", "Daily Life", "🔤"],
 ];
 
+const makeNaturalExample = (word: string, meaning: string, category: WordCategory) => {
+  const plural = word.endsWith("y") ? `${word.slice(0, -1)}ies` : /(s|x|z|ch|sh)$/.test(word) ? `${word}es` : `${word}s`;
+  if (category === "Food") {
+    return {
+      example: `I like ${plural}.`,
+      exampleMeaning: `Con thích ${meaning.replace("từ mở rộng: ", "")}.`,
+      grammarNote: `${word} là từ đơn về đồ ăn/trái cây. Khi nói thích một loại nói chung, có thể dùng dạng số nhiều: ${plural}.`
+    };
+  }
+  if (category === "Animals") {
+    return {
+      example: `I like ${plural}.`,
+      exampleMeaning: `Con thích ${meaning.replace("từ mở rộng: ", "")}.`,
+      grammarNote: `${word} là từ đơn về con vật/thiên nhiên. Khi nói thích một loài nói chung, dùng dạng số nhiều: ${plural}.`
+    };
+  }
+  if (category === "Actions") {
+    return {
+      example: `Let's ${word}.`,
+      exampleMeaning: `Mình cùng ${meaning.replace("từ mở rộng: ", "")} nhé.`,
+      grammarNote: `${word} là từ đơn có thể dùng như hành động. “Let's ${word}” là mẫu rủ ai đó cùng làm.`
+    };
+  }
+  if (category === "Family") {
+    return {
+      example: `I see a ${word}.`,
+      exampleMeaning: `Con nhìn thấy ${meaning.replace("từ mở rộng: ", "")}.`,
+      grammarNote: `${word} là từ đơn liên quan đến người/nhóm người. Dùng trong câu ngắn để nhận ra nghĩa.`
+    };
+  }
+  if (category === "School") {
+    return {
+      example: `This ${word} is useful.`,
+      exampleMeaning: `${meaning.replace("từ mở rộng: ", "")} này hữu ích.`,
+      grammarNote: `${word} là từ đơn liên quan đến học tập. Câu mẫu đặt từ trong ngữ cảnh lớp học.`
+    };
+  }
+  if (category === "Feelings") {
+    return {
+      example: `I feel ${word}.`,
+      exampleMeaning: `Con cảm thấy ${meaning.replace("từ mở rộng: ", "")}.`,
+      grammarNote: `${word} là từ đơn có thể liên quan cảm xúc. “I feel...” là mẫu nói cảm giác.`
+    };
+  }
+  return {
+    example: `I see ${word}.`,
+    exampleMeaning: `Con thấy từ/ý “${word}”.`,
+    grammarNote: `${word} là từ đơn trong kho mở rộng. Câu mẫu dùng để nhận ra từ trong ngữ cảnh ngắn, không tách thành cụm giả.`
+  };
+};
+
 export const makeExtraSingleWords = (startId: number): Word[] =>
-  extraSeeds.map(([word, meaning, category, emoji], index) => ({
-    id: startId + index,
-    word,
-    meaning,
-    category,
-    partOfSpeech: "other",
-    emoji,
-    pronunciation: "Nghe bằng Web Speech API",
-    pronunciationText: word,
-    syllables: [word],
-    vietnameseGuide: `Con nghe cô đọc từ “${word}”, rồi đọc theo chậm và rõ.`,
-    mouthTip: "Nhìn từ, nghe trước, sau đó đọc lại từng âm thật chậm.",
-    commonMistake: `Đừng thêm âm tiếng Việt ở cuối từ “${word}”.`,
-    example: `I can read the word "${word}".`,
-    exampleMeaning: `Con có thể đọc từ “${word}”.`,
-    explanation: `“${word}” là một từ đơn tiếng Anh trong kho mở rộng. Với các từ mở rộng, con nên học cách nghe, đọc và nhận ra từ trước.`,
-    grammarNote: `Đây là một từ đơn. App không tự biến “${word}” thành cụm từ; khi cần dùng trong câu, con nhìn ví dụ ngắn để biết vị trí của từ.`,
-    memoryTip: `Nghe “${word}” 3 lần và tự đặt một câu thật ngắn.`,
-    relatedWords: []
-  }));
+  extraSeeds.map(([word, meaning, category, emoji], index) => {
+    const usage = makeNaturalExample(word, meaning, category);
+    return {
+      id: startId + index,
+      word,
+      meaning,
+      category,
+      partOfSpeech: "other",
+      emoji,
+      pronunciation: "Nghe bằng Web Speech API",
+      pronunciationText: word,
+      syllables: [word],
+      vietnameseGuide: `Con nghe cô đọc từ “${word}”, rồi đọc theo chậm và rõ.`,
+      mouthTip: "Nhìn từ, nghe trước, sau đó đọc lại từng âm thật chậm.",
+      commonMistake: `Đừng thêm âm tiếng Việt ở cuối từ “${word}”.`,
+      example: usage.example,
+      exampleMeaning: usage.exampleMeaning,
+      explanation: `“${word}” là một từ đơn tiếng Anh trong kho mở rộng. Con học cách nghe, đọc và gặp từ trong câu ngắn.`,
+      grammarNote: usage.grammarNote,
+      memoryTip: `Nghe “${word}” 3 lần và đọc lại câu mẫu.`,
+      relatedWords: []
+    };
+  });
