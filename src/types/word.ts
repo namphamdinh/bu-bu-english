@@ -11,6 +11,7 @@ export type Word = {
   word: string;
   meaning: string;
   category: WordCategory;
+  partOfSpeech?: "noun" | "verb" | "adjective" | "adverb" | "pronoun" | "preposition" | "conjunction" | "determiner" | "number" | "other";
   emoji: string;
   pronunciation: string;
   pronunciationText: string;
@@ -21,6 +22,7 @@ export type Word = {
   example: string;
   exampleMeaning: string;
   explanation: string;
+  grammarNote?: string;
   memoryTip: string;
   collocations?: string[];
   relatedWords?: string[];

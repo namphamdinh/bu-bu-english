@@ -1511,6 +1511,7 @@ export const makeExtraSingleWords = (startId: number): Word[] =>
     word,
     meaning,
     category,
+    partOfSpeech: "other",
     emoji,
     pronunciation: "Nghe bằng Web Speech API",
     pronunciationText: word,
@@ -1518,9 +1519,10 @@ export const makeExtraSingleWords = (startId: number): Word[] =>
     vietnameseGuide: `Con nghe cô đọc từ “${word}”, rồi đọc theo chậm và rõ.`,
     mouthTip: "Nhìn từ, nghe trước, sau đó đọc lại từng âm thật chậm.",
     commonMistake: `Đừng thêm âm tiếng Việt ở cuối từ “${word}”.`,
-    example: `I know ${word}.`,
-    exampleMeaning: `Con đã gặp từ “${word}”.`,
-    explanation: `“${word}” là một từ đơn tiếng Anh trong kho mở rộng.`,
+    example: `I can read the word "${word}".`,
+    exampleMeaning: `Con có thể đọc từ “${word}”.`,
+    explanation: `“${word}” là một từ đơn tiếng Anh trong kho mở rộng. Với các từ mở rộng, con nên học cách nghe, đọc và nhận ra từ trước.`,
+    grammarNote: `Đây là một từ đơn. App không tự biến “${word}” thành cụm từ; khi cần dùng trong câu, con nhìn ví dụ ngắn để biết vị trí của từ.`,
     memoryTip: `Nghe “${word}” 3 lần và tự đặt một câu thật ngắn.`,
     relatedWords: []
   }));

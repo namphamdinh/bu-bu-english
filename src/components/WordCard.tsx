@@ -10,12 +10,25 @@ type Props = {
   onQuiz?: () => void;
 };
 
+const partOfSpeechLabels: Record<string, string> = {
+  noun: "Danh từ",
+  verb: "Động từ",
+  adjective: "Tính từ",
+  adverb: "Trạng từ",
+  pronoun: "Đại từ",
+  preposition: "Giới từ",
+  conjunction: "Liên từ",
+  determiner: "Từ hạn định",
+  number: "Số/từ chỉ thứ tự",
+  other: "Từ đơn mở rộng"
+};
+
 export const WordCard = ({ word, onRemember, onDifficult, onQuiz }: Props) => {
   const { isSupported } = useSpeech();
   return <article className="word-card">
     <div className="word-card__hero">
       <span className="word-card__emoji">{word.emoji}</span>
-      <div><span className="pill">{word.category}</span><h1>{word.word}</h1><h2>{word.meaning}</h2></div>
+      <div><span className="pill">{word.category}</span>{word.partOfSpeech && <span className="pill grammar-pill">{partOfSpeechLabels[word.partOfSpeech]}</span>}<h1>{word.word}</h1><h2>{word.meaning}</h2></div>
     </div>
     <section className="listen-box">
       <h3>🎧 Bư Bư nghe và đọc theo</h3>
@@ -37,6 +50,10 @@ export const WordCard = ({ word, onRemember, onDifficult, onQuiz }: Props) => {
       <button className="button button--soft">🎙️ Con đã đọc xong</button>
     </details>
     <div className="example-card"><strong>{word.example}</strong><span>{word.exampleMeaning}</span><SpeakerButton text={word.example} /></div>
+    {word.grammarNote && <details className="info-box" open>
+      <summary>🧩 Cách dùng từ này</summary>
+      <p>{word.grammarNote}</p>
+    </details>}
     <details className="info-box">
       <summary>💡 Hiểu và nhớ từ</summary>
       <p>{word.explanation}</p><p><strong>Mẹo nhớ:</strong> {word.memoryTip}</p>

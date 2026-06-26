@@ -4,18 +4,125 @@ import { makeExtraSingleWords } from "./extraSingleWords";
 type Seed = [word: string, meaning: string, emoji: string, ipa: string, read: string];
 let nextId = 1;
 
+const knownVerbs = new Set([
+  "read", "write", "learn", "spell", "run", "walk", "jump", "sit", "stand", "eat", "drink", "sleep", "wake",
+  "play", "sing", "dance", "draw", "paint", "open", "close", "look", "see", "hear", "listen", "talk", "say",
+  "give", "take", "help", "ride", "sail", "fly", "drive", "cook", "wash", "brush", "clean", "dress", "bathe",
+  "shop", "buy", "pay", "like", "love", "feel", "work"
+]);
+
+const knownAdjectives = new Set([
+  "red", "blue", "yellow", "green", "orange", "purple", "pink", "brown", "black", "white", "gray", "gold",
+  "silver", "dark", "light", "bright", "colorful", "happy", "sad", "angry", "scared", "afraid", "tired",
+  "sleepy", "hungry", "thirsty", "excited", "surprised", "worried", "shy", "brave", "calm", "proud", "kind",
+  "nice", "funny", "lonely", "bored", "well", "sick", "sunny", "rainy", "windy", "cloudy", "snowy", "hot",
+  "cold", "warm", "cool", "big", "tiny", "tall", "short", "long", "fast", "slow", "young", "old", "new",
+  "good", "bad", "right", "wrong", "easy", "hard", "full", "empty", "wet", "dry", "same"
+]);
+
+const numberWords = new Set([
+  "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve",
+  "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen", "twenty", "hundred",
+  "first", "second", "third"
+]);
+
+const inferPartOfSpeech = (word: string, category: WordCategory): Word["partOfSpeech"] => {
+  if (knownVerbs.has(word)) return "verb";
+  if (knownAdjectives.has(word)) return "adjective";
+  if (numberWords.has(word) || category === "Numbers") return "number";
+  return "noun";
+};
+
+const makeUsage = (word: string, meaning: string, category: WordCategory) => {
+  const partOfSpeech = inferPartOfSpeech(word, category);
+  const article = /^[aeiou]/i.test(word) ? "an" : "a";
+  if (word === "learn") {
+    return {
+      partOfSpeech,
+      example: "Learning English is really fun.",
+      exampleMeaning: "Việc học tiếng Anh thật sự rất vui.",
+      grammarNote: "learn là động từ nghĩa là học. Khi một hành động đứng ở đầu câu như một việc/hoạt động, ta thường thêm -ing thành learning, nghĩa là “việc học”. Vì vậy nói “Learning English is really fun”, không nói “This is a learn”."
+    };
+  }
+  if (partOfSpeech === "verb") {
+    return {
+      partOfSpeech,
+      example: `I can ${word}.`,
+      exampleMeaning: `Con có thể ${meaning}.`,
+      grammarNote: `${word} là động từ, dùng để nói một hành động. Mẫu dễ nhớ: “I can ${word}.” Sau “can” dùng động từ nguyên mẫu, không thêm s/es/ing.`
+    };
+  }
+  if (partOfSpeech === "adjective") {
+    const feeling = category === "Feelings";
+    return {
+      partOfSpeech,
+      example: feeling ? `I am ${word}.` : `It is ${word}.`,
+      exampleMeaning: feeling ? `Con cảm thấy ${meaning}.` : `Nó ${meaning}.`,
+      grammarNote: `${word} là tính từ, dùng để miêu tả người/vật. Tính từ thường đi sau “is/am/are” hoặc đứng trước danh từ.`
+    };
+  }
+  if (partOfSpeech === "number") {
+    return {
+      partOfSpeech,
+      example: `I see ${word}.`,
+      exampleMeaning: `Con nhìn thấy số/thứ tự “${word}”.`,
+      grammarNote: `${word} là từ chỉ số lượng hoặc thứ tự. Khi đếm đồ vật, mình đặt số trước danh từ.`
+    };
+  }
+  if (category === "Family") {
+    const plural = word === "parents" || word === "children" || word.endsWith("s");
+    return {
+      partOfSpeech,
+      example: plural ? `These are my ${word}.` : `This is my ${word}.`,
+      exampleMeaning: plural ? `Đây là ${meaning} của con.` : `Đây là ${meaning} của con.`,
+      grammarNote: `${word} là danh từ về gia đình/người thân. Với người thân, mẫu tự nhiên là “my ${word}” nghĩa là “${meaning} của con”.`
+    };
+  }
+  if (category === "Body") {
+    return {
+      partOfSpeech,
+      example: `This is my ${word}.`,
+      exampleMeaning: `Đây là ${meaning} của con.`,
+      grammarNote: `${word} là danh từ chỉ bộ phận cơ thể. Khi nói về cơ thể của mình, dùng “my ${word}”.`
+    };
+  }
+  if (category === "Food") {
+    const drinkWords = new Set(["milk", "water", "juice", "soup"]);
+    const noArticleFoods = new Set(["rice", "bread", "cheese", "meat", "noodles", "breakfast", "lunch", "dinner"]);
+    const foodObject = noArticleFoods.has(word) ? word : `${article} ${word}`;
+    return {
+      partOfSpeech,
+      example: drinkWords.has(word) ? `I drink ${word}.` : `I eat ${foodObject}.`,
+      exampleMeaning: drinkWords.has(word) ? `Con uống ${meaning}.` : `Con ăn ${meaning}.`,
+      grammarNote: `${word} là danh từ về đồ ăn/đồ uống. Với đồ ăn thường dùng “eat”, với đồ uống thường dùng “drink”.`
+    };
+  }
+  if (word === "homework") {
+    return {
+      partOfSpeech,
+      example: "I do homework.",
+      exampleMeaning: "Con làm bài tập về nhà.",
+      grammarNote: "homework là danh từ không đếm được trong tiếng Anh. Ta nói “I do homework”, không nói “a homework”."
+    };
+  }
+  return {
+    partOfSpeech,
+    example: `This is ${article} ${word}.`,
+    exampleMeaning: `Đây là ${meaning}.`,
+    grammarNote: `${word} là danh từ, dùng để gọi tên người, vật, nơi chốn hoặc ý tưởng. Với một vật đếm được, có thể dùng “a/an” phía trước.`
+  };
+};
+
 const makeWords = (category: WordCategory, rows: string): Word[] =>
   rows.trim().split("\n").map((line) => {
     const [word, meaning, emoji, ipa, read] = line.split("|").map((item) => item.trim()) as Seed;
-    const article = /^[aeiou]/i.test(word) ? "an" : "a";
-    const isAction = category === "Actions" || category === "Daily Life";
-    const example = isAction ? `I can ${word}.` : `This is ${article} ${word}.`;
-    const exampleMeaning = isAction ? `Con có thể ${meaning}.` : `Đây là ${meaning}.`;
+    const usage = makeUsage(word, meaning, category);
     return {
       id: nextId++,
       word,
       meaning,
       category,
+      partOfSpeech: usage.partOfSpeech,
       emoji,
       pronunciation: ipa,
       pronunciationText: read,
@@ -23,11 +130,12 @@ const makeWords = (category: WordCategory, rows: string): Word[] =>
       vietnameseGuide: `Con nghe chậm, đọc “${read}”, rồi nối các âm thật mềm.`,
       mouthTip: `Nhìn miệng cô, thả lỏng hàm và đọc rõ từng phần: ${read}.`,
       commonMistake: `Đừng thêm âm “ơ” hoặc âm cuối tiếng Việt vào từ “${word}”.`,
-      example,
-      exampleMeaning,
+      example: usage.example,
+      exampleMeaning: usage.exampleMeaning,
       explanation: `“${word}” có nghĩa là ${meaning}. Đây là một từ quen thuộc Bư Bư có thể gặp mỗi ngày.`,
+      grammarNote: usage.grammarNote,
       memoryTip: `Nhìn ${emoji}, nói “${word}” ba lần và tưởng tượng ${meaning} đang mỉm cười với Bư Bư.`,
-      collocations: isAction ? [`${word} every day`] : undefined,
+      collocations: usage.partOfSpeech === "verb" ? [`${word} every day`] : undefined,
       relatedWords: []
     };
   });
