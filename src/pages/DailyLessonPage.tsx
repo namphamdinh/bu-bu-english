@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { DailyWordList } from "../components/DailyWordList";
 import { MiniStoryCard } from "../components/MiniStoryCard";
@@ -17,6 +17,10 @@ export const DailyLessonPage = () => {
   const [index, setIndex] = useState(startIndex);
   const [showUsage, setShowUsage] = useState(lesson.learnedWordIds.length >= 10);
   const word = lessonWords[index];
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [index, showUsage]);
 
   const finishWord = (difficult: boolean) => {
     update((current) => {
