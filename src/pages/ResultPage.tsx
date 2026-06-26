@@ -12,9 +12,9 @@ export const ResultPage = () => {
     <Mascot message="Bư Bư giỏi quá!" />
     <h1>Hôm nay Bư Bư hoàn thành nhiệm vụ rồi!</h1>
     <div className="result-grid">
-      <div>✅ <strong>{quiz?.correctAnswers ?? 0}/10</strong><span>Câu đúng</span></div>
+      <div>✅ <strong>{quiz?.correctAnswers ?? 0}/{lessonWords.length}</strong><span>Câu đúng</span></div>
       <div>⭐ <strong>{quiz?.starsEarned ?? 0}</strong><span>Sao nhận được</span></div>
-      <div>🧠 <strong>{10 - difficult.length}</strong><span>Từ đã nhớ</span></div>
+      <div>🧠 <strong>{lessonWords.length - difficult.length}</strong><span>Từ đã nhớ</span></div>
       <div>🤔 <strong>{difficult.length}</strong><span>Từ cần ôn</span></div>
     </div>
     {difficult.length > 0 && <div className="info-box"><strong>Từ mình sẽ gặp lại:</strong><p>{difficult.map((w) => `${w.emoji} ${w.word}`).join(" · ")}</p></div>}

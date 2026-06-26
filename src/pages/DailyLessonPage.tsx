@@ -15,7 +15,7 @@ export const DailyLessonPage = () => {
   const navigate = useNavigate();
   const startIndex = Math.min(lesson.learnedWordIds.length, lessonWords.length - 1);
   const [index, setIndex] = useState(startIndex);
-  const [showUsage, setShowUsage] = useState(lesson.learnedWordIds.length >= 10);
+  const [showUsage, setShowUsage] = useState(lesson.learnedWordIds.length >= lessonWords.length);
   const word = lessonWords[index];
 
   useEffect(() => {
@@ -48,7 +48,7 @@ export const DailyLessonPage = () => {
   return (
     <main className="page">
       <div className="page-top"><button className="icon-button" onClick={() => navigate("/")}>←</button>
-        <ProgressBar value={index + 1} max={10} label="Từ hôm nay" /></div>
+        <ProgressBar value={index + 1} max={lessonWords.length} label="Từ hôm nay" /></div>
       <DailyWordList words={lessonWords} current={index} />
       <WordCard word={word} onRemember={() => finishWord(false)} onDifficult={() => finishWord(true)} onQuiz={() => navigate("/quiz")} />
       {(index + 1) % 5 === 0 && <MiniStoryCard words={lessonWords.slice(Math.max(0, index - 4), index + 1)} />}

@@ -1,4 +1,5 @@
 import type { Word, WordCategory } from "../types/word";
+import { makeExtraSingleWords } from "./extraSingleWords";
 
 type Seed = [word: string, meaning: string, emoji: string, ipa: string, read: string];
 let nextId = 1;
@@ -26,7 +27,7 @@ const makeWords = (category: WordCategory, rows: string): Word[] =>
       exampleMeaning,
       explanation: `“${word}” có nghĩa là ${meaning}. Đây là một từ quen thuộc Bư Bư có thể gặp mỗi ngày.`,
       memoryTip: `Nhìn ${emoji}, nói “${word}” ba lần và tưởng tượng ${meaning} đang mỉm cười với Bư Bư.`,
-      collocations: isAction ? [`${word} every day`] : [`my ${word}`, `a ${word}`],
+      collocations: isAction ? [`${word} every day`] : undefined,
       relatedWords: []
     };
   });
@@ -591,11 +592,13 @@ down|xuống|⬇️|/daʊn/|đao-n
 same|giống nhau|🟰|/seɪm/|sâym
 `);
 
-export const words: Word[] = [
+const coreWords: Word[] = [
   ...family, ...animals, ...food, ...colors, ...numbers,
   ...body, ...school, ...toys, ...house, ...clothes,
   ...actions, ...feelings, ...nature, ...vehicles, ...dailyLife,
   ...shopping, ...weather, ...time, ...places, ...opposites
 ];
+
+export const words: Word[] = [...coreWords, ...makeExtraSingleWords(coreWords.length + 1)];
 
 export const wordsById = new Map(words.map((word) => [word.id, word]));

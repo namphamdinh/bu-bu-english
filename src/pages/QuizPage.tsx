@@ -16,7 +16,7 @@ export const QuizPage = () => {
   const { speak, isSupported } = useSpeech();
   const navigate = useNavigate();
   const state = progress.quizStates[date] ?? { date, askedQuestionIds: [], completedWordIds: [], correctAnswers: 0, starsEarned: 0 };
-  const [index, setIndex] = useState(Math.min(state.completedWordIds.length, 9));
+  const [index, setIndex] = useState(Math.min(state.completedWordIds.length, Math.max(0, lessonWords.length - 1)));
   const [selected, setSelected] = useState<string>();
   const [previousType, setPreviousType] = useState<QuestionType>();
   const question = useMemo(() =>
@@ -64,7 +64,7 @@ export const QuizPage = () => {
   };
 
   if (!question) return null;
-  return <main className="page"><ProgressBar value={index + 1} max={10} label="Quiz hôm nay" />
+  return <main className="page"><ProgressBar value={index + 1} max={lessonWords.length} label="Quiz hôm nay" />
     {question.speakFirst && !isSupported && <p className="speech-fallback">Máy này chưa hỗ trợ đọc tiếng Anh tự động. Bư Bư vẫn có thể nhìn cách đọc và học bình thường nhé!</p>}
     <QuizQuestion
       question={question}

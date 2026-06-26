@@ -6,6 +6,7 @@ export const emptyProgress = (): AppProgress => ({
   words: {},
   lessons: {},
   quizStates: {},
+  selectedLessonTopicId: "all",
   totalStars: 0,
   badges: [],
   studyDates: []
@@ -22,6 +23,7 @@ export const readProgress = (): AppProgress => {
       words: parsed.words ?? {},
       lessons: parsed.lessons ?? {},
       quizStates: parsed.quizStates ?? {},
+      selectedLessonTopicId: typeof parsed.selectedLessonTopicId === "string" ? parsed.selectedLessonTopicId : "all",
       badges: Array.isArray(parsed.badges) ? parsed.badges : [],
       studyDates: Array.isArray(parsed.studyDates) ? parsed.studyDates : []
     };

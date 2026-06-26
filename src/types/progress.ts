@@ -14,6 +14,7 @@ export type WordProgress = {
 
 export type DailyLesson = {
   date: string;
+  topicId: string;
   wordIds: number[];
   learnedWordIds: number[];
   completed: boolean;
@@ -31,6 +32,7 @@ export type AppProgress = {
   words: Record<number, WordProgress>;
   lessons: Record<string, DailyLesson>;
   quizStates: Record<string, DailyQuizState>;
+  selectedLessonTopicId: string;
   totalStars: number;
   badges: string[];
   studyDates: string[];
