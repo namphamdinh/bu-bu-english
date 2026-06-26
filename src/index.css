@@ -28,3 +28,4 @@ html,body,#root{max-width:100%;overflow-x:hidden}
 @media(max-width:430px){.mascot img{width:min(72%,210px);max-height:230px}.mascot__bubble{max-width:210px}}
 .grammar-pill{background:#ffe3e8;margin-left:6px}
 .usage-title{display:inline-block;font-weight:900;color:#e25f76;text-transform:uppercase;letter-spacing:.04em}.usage-card em{display:block;margin-top:6px;color:#5f6b6d;font-style:normal;font-weight:700}
+.continue-box{margin-top:18px;padding:16px;border-radius:22px;background:linear-gradient(135deg,#fff3c9,#eefafc)}.continue-box h2{margin:0}.continue-box label{display:grid;gap:7px;margin:12px 0;font-weight:900}.continue-box select{border:2px solid #e8e8e8;border-radius:16px;padding:13px;background:#fff;width:100%}
