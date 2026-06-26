@@ -19,7 +19,7 @@ export const HomePage = () => {
   return (
     <main className="home">
       <header className="hero">
-        <div><span className="eyebrow">2000 WORDS & PHRASES</span><h1>Bư Bư English</h1>
+        <div><span className="eyebrow">500 SINGLE WORDS</span><h1>Bư Bư English</h1>
           <p>Mỗi ngày 10 từ, Bư Bư giỏi tiếng Anh hơn một chút!</p>
           <ProgressBar value={lesson.learnedWordIds.length} max={10} label="Tiến độ hôm nay" />
         </div>
@@ -33,7 +33,7 @@ export const HomePage = () => {
       <nav className="home-actions">
         <Link className="home-action primary" to="/lesson"><span>🚀</span><div><strong>Bắt đầu học hôm nay</strong><small>10 từ mới đang chờ Bư Bư</small></div></Link>
         <Link className="home-action" to="/review"><span>🧠</span><div><strong>Ôn lại từ khó</strong><small>Gặp lại những bạn từ chưa thuộc</small></div></Link>
-        <Link className="home-action" to="/vocabulary"><span>📚</span><div><strong>Kho 2000 từ/cụm từ</strong><small>Tìm từ theo chủ đề</small></div></Link>
+        <Link className="home-action" to="/vocabulary"><span>📚</span><div><strong>Kho 500 từ đơn</strong><small>Tìm từ theo chủ đề</small></div></Link>
         <Link className="home-action" to="/mind-map"><span>🫧</span><div><strong>Bản đồ chủ đề</strong><small>Khám phá các nhóm từ</small></div></Link>
         <Link className="home-action" to="/parents"><span>👪</span><div><strong>Góc phụ huynh</strong><small>Xem tiến độ của bé</small></div></Link>
       </nav>

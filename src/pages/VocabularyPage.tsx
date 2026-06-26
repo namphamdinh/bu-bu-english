@@ -27,7 +27,7 @@ export const VocabularyPage = () => {
     if (value) next.set(key, value); else next.delete(key);
     setParams(next);
   };
-  return <main className="page wide"><div className="page-card"><h1>📚 Kho 2000 từ/cụm từ</h1>
+  return <main className="page wide"><div className="page-card"><h1>📚 Kho 500 từ đơn</h1>
     <div className="filters"><input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Tìm apple hoặc quả táo..." />
       <select value={category} onChange={(e) => setFilter("category", e.target.value)}><option value="">Tất cả chủ đề</option>{WORD_CATEGORIES.map((c) => <option key={c}>{c}</option>)}</select>
       <select value={status} onChange={(e) => setFilter("status", e.target.value)}><option value="">Tất cả trạng thái</option><option value="new">Chưa học</option><option value="learning">Đang học</option><option value="hard">Từ khó</option><option value="mastered">Thuộc rồi</option></select>
